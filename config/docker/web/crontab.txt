@@ -1,0 +1,3 @@
+MAILTO=""
+
+*/10 * * * *  if [[ $ENVIRONMENT != 'DEV' ]]; then su -c '//var/www/html/web/admin/cli/cron.php' -s /bin/bash www-data; fi

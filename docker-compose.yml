@@ -1,0 +1,25 @@
+# Development compose file.
+
+web:
+  build: . # Can't be below this since we have to add files in public/
+  ports:
+   - "127.0.0.1:8083:80"    # Web
+   - "127.0.0.1:1083:1080"  # Mailcatcher
+  volumes:
+   - .:/var/www/html
+   - ./config/moodle/config.php:/var/www/html/web/config.php
+  links:
+   - db
+  environment:
+   - MOODLE_WWWROOT=http://localhost:8083
+   - ENVIRONMENT=DEV
+   - SSL=FALSE
+db:
+  image: mysql:5.5
+  volumes_from:
+   - moodle_data
+  environment:
+   - MYSQL_ROOT_PASSWORD=docker
+   - MYSQL_DATABASE=moodle
+   - MYSQL_USER=moodle
+   - MYSQL_PASSWORD=moodlepw
